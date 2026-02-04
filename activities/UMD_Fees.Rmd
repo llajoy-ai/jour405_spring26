@@ -8,11 +8,9 @@ Follow along with the demo to learn how to calculate percentage change using R a
 ### Task 1: Load the tidyverse
 
 
-```{r}'
-library(tidyverse)
+```{r}
+library('tidyverse')
 ```
-
-
 
 
 ### Task 2: Load the UMD Fees dataset from https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/umd_fees.csv
@@ -25,6 +23,8 @@ umd_fees <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/hea
 
 ```{r}
 umd_fees_pct <- umd_fees |> mutate(pct_change = (`Fall 2024`- `Fall 2021`)/`Fall 2021` * 100)
+(1722-1455)/1455 * 100
+
 ```
 
 
@@ -32,7 +32,7 @@ umd_fees_pct <- umd_fees |> mutate(pct_change = (`Fall 2024`- `Fall 2021`)/`Fall
 ### Task 4: Describe our results
 
 Write a few sentences about what you found in the data. What's the story here?
-
+Based on the data I found that the fee for school increased by 18% throughout four years. This is a sharp increase and this means that people have had to pay much more money throughout the years. Specifically from the data some of the more expensive increases were from shuttle busses and counseling. I think this is very interesting that athletics did not increase more than some of these other categories.   
 
 
 
