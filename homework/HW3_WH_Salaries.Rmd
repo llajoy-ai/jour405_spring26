@@ -9,6 +9,7 @@ In this assignment, we will be working with a dataset containing information abo
 You will need to load the tidyverse library
 
 ```{r}
+library(tidyverse)
 ```
 
 Then you'll load the data from the web. The URL for the data is: https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/white_house_salaries_2025.csv. You will create a dataframe called `wh_salaries` that contains the data from this URL.
@@ -16,18 +17,24 @@ Then you'll load the data from the web. The URL for the data is: https://raw.git
 ### Task 2: Load the Data and Describe It
 
 ```{r}
+wh_salaries <- read_csv('https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/white_house_salaries_2025.csv')
 ```
 ### Task 3: Describe the Data
 
 You should examine that dataframe carefully by clicking on it in the Environment tab in RStudio. Write a couple of sentences describing the categories of incidents. From a reporting standpoint, what stands out to you about this data? Are there any salary values that will cause problems for analysis?
 
-ANSWER HERE
+In the categories for status the most frequent result was employee, however there were many people listed as detailee as well. Also, in the payment category, most of the salaries range from around 60,000 a year to almost 200,00 depending on what they are doing. Everyone's salaries are listed as per annum meaning the salaries listed are what they are paid yearly. One thing that stood out to me about the data a couple of people listed had a salary of 0 despite being labeled as an employee. One that specifically caught my eye was the employee who is listed as the assistant to the president and national secuirty advisor because they had a salary of 0 listed but that rank sounds important so I was curious why their salary was not listed. I think these people who have 0s will cause confusion because it will make it seem that the salaries are less than they actually are because some people are only being paid 0. This could cause problems because it could cause confusion about how much money the White House is actually spending on their salaries. Especially because there is such a wide range of payments throughout the white hosue as mentioned previously. 
 
 ### Task 4: Calculate the Mean and Median of the Salaries
 
 Write code to calculate the mean and median of the salaries in the dataset using the `summarize()` function. You don't need to make a new dataframe, just display the results.
 
 ```{r}
+wh_salaries |>
+  summarize(
+    mean_whsalaries =mean(SALARY),
+    median_whsalaries =median(SALARY)
+  )
 
 ```
 
@@ -36,6 +43,13 @@ Write code to calculate the mean and median of the salaries in the dataset using
 Take the code you just wrote and add in the minimum and maximum salaries (the functions for that are `min()` and `max()`). Your results should show four columns: mean_salary, median_salary, min_salary, max_salary.
 
 ```{r}
+wh_salaries |>
+  summarize(
+    min_salary = min(SALARY),
+    max_salary =max(SALARY),
+    mean_salary =mean(SALARY),
+    median_salary =median(SALARY)
+  )
 
 ```
 
@@ -43,10 +57,10 @@ Take the code you just wrote and add in the minimum and maximum salaries (the fu
 
 Write a couple of sentences describing the results of your analysis. What do the mean and median salaries tell you about the data? What do the minimum and maximum salaries tell you? Are there any outliers in the data?
 
-ANSWER HERE
+After doing the work to get the analysis I thought it was very interesting how wide the gap was specifically between the minimum and maximum salaries. Between the mean and median the numbers were only a couple thousand dollars off which tells me that most people are receiving the same amount of pay. I think this is a good showing because it means that the numbers are not too skewed and that the number that is in the middle is around what everyone is being paid which makes sense because of how many salaries were included. If there had been a large gap between the mean and the median I think that there would have been a cause for concern since there were so many salaries and that would have shown a huge gap and confusion with the statistics. However, the minimum and maximum salaries tell me that some people are being trastically overpaid compared to others while some people are receiving literally no money. I think it is very confusing how the average employee is receiving around $100,000 while the highest salary is over $100,000 more than the average person. Also, if most people are making around $100,000 why are there people making 0? I think that they need to figure out why those couple people are listed as making 0 and I think they need to expand on if this was a mistake or if they actually make that little. I think if this is true they need to re-look into some peoples salaries and maybe allocate some of the money going to people earning over $200,000 and give it to the people that are not listed as earning any money. Yes there are outliers in the data. I think the people who earned 0 are outliers because it makes it seem like the numbers are much more drastic than they are. Also, I saw a lot of people who earned less than $100,000 and I think it is curious that there is such a large range of salaries for people that work at the same place. I expected the mean to be a little lower actually because I saw so many people with lower salaries on the list so that surprised me.
 
 ### Task 7: Story Idea
 
 Based on the data, what is your best story idea? What is the next step you would take to develop that story idea?
 
-ANSWER HERE
+For a story idea I would do an investigation into why some of the people were listed as having a 0 salary. I thought this was very odd because everyone else had a salary listed. These people were all listed as employees. I would want to research if they were actually supposed to have a 0 next to their salary or if this was an error. If this was an error than I would start asking if it was an accident or done on purpose. I think it could have potentially been done on purpose so that it made the overall average appear to be somewhat lower than it actually was so that people would think not as much money was being spent as it actually was. I think this could be an interesting look into how money is actually being allocated and if it is being allocated correctly. If those were actually supposed to be 0 I would then do some research into why those couple people are not earning money despite being listed as having a job and being employed. 
