@@ -45,7 +45,7 @@ crimes_with_rates <- crimes |> mutate(violent_rate = violent_crime_total/populat
 
 Write a few sentences about what you found in the data. What years had the highest crime rates? What years had the lowest crime rates? Does the pattern match your expectations?
 
-
+From the data I saw that the highest crime rates occured in the early-mid 1990s. The years with the lowest crime rates are in the 2010s. Yes, this pattern does match my expectation. I think that especially after looking at the original crime data without rates it was clear that the number of crimes decreased towards 2020. Therefore, the fact that the rate changed did not surprise me much since I already knew that crime numbers decreased. 
 
 
 When you are done, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
