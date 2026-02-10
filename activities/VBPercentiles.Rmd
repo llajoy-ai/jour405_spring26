@@ -36,8 +36,8 @@ team_aces |> mutate(percentile = ntile(total_aces, 100))
 ### Task 5: Describe the percentiles
 
 Write a couple of sentences that puts Maryland into context with the other teams in the dataset. You can do some Internet research to help with this.
-
-
+ 95
+In regards to the other teams Maryland is in the 95th percentile. Meaning that they made 95% more aces than other teams ranked. They are ranked 17th on the entire schedule out of 343 teams. This means that Maryland is good at making aces and makes aces more often than most teams competing. However there are 3 teams also in the 95 percentile meaning Maryland has teams that are in the same percentile even if they have a different number of aces made. 
 
 When you are done, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
 
