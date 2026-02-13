@@ -59,3 +59,24 @@ Nutgraph: After looking at the rates of crime between the two years, I noticed t
 ### Task 9: Save Your Work and Put it on GitHub
 
 Save this notebook, then commit it to your local repository. Push the changes to your GitHub repository and submit the URL for this file in ELMS.
+
+### Task 10: 
+
+```{r}
+md_cities_percentiles = md_cities_rates |> mutate(percentile = ntile(violent_rate_2020, 100)) 
+```
+
+How man cities are above 90th percentile? 
+
+The cities that are above the 90th percentile are Baltimore, Cambridge, Clear Spring, Elkton, Kitzmiller, Ocean City, Princess Anne, Salisbury, Seat Pleasant and Williamsport. The highest was Ocean City which was in the 100th percentile. There was a total of 10 cities in Baltimore that were higher than the 90th percentile. 
+
+## Task 11: 
+
+```{r}
+md_cities_rates |> summarise(IQR = IQR(violent_rate_2020))
+```
+
+Would I want to change my original story idea? 
+
+A low IQR signals that the crime rates in violent crimes in Maryland in 2020 were pretty similar. This is because the IQR is low which means there is not much variaiance between the data. If there was a large variance that would mean some places are experiencing significantly more violent crimes. However, This answer suggests that the crime trends in Maryland do not have much variance meaning that all cities experience similar amounts of the crime. Despite this meaning that there is not much of a crime differemce, I think I would still stick with my original story. Ocean City clearly does experience more crime than any other city in Maryland because it was in the 100th percentile. I still think it would be valuable to dive into why this is such a problem in this location and try to figure out what the cause is and what officers can do to try and bring the numbers down. 
+
