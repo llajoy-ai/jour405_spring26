@@ -7,18 +7,21 @@ In this assignment, you will be working with a dataset of songs played on Spotif
 ### Task 1: Load the tidyverse
 
 ```{r}
+library(tidyverse)
 ```
 
 ### Task 2: Load the Spotify Songs dataset from https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/spotify_2020.csv
 
 ```{r}
+Spotify_Songs = read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/spotify_2020.csv")
 ```
 
 ### Task 3: Calculate the mean and standard deviation of the danceability scores
 
-Write code to calculate the mean standard deviation of the danceability scores in the Spotify dataset. Display those.
+Write code to calculate the mean and standard deviation of the danceability scores in the Spotify dataset. Display those.
 
 ```{r}
+Spotify_Songs |> summarise(mean = mean(danceability), sd = sd(danceability))
 ```
 
 ### Task 4: Create a histogram of the danceability scores
@@ -26,20 +29,48 @@ Write code to calculate the mean standard deviation of the danceability scores i
 Write code to create a histogram of the danceability scores in the Spotify dataset, based on the example we did in class.
 
 ```{r}
+Spotify_Songs |>
+  ggplot() + 
+  geom_histogram(aes(x=danceability), binwidth = 0.01)
+
 ```
 
 ### Task 5: Add a line to the histogram for the mean danceability score
 
-Write code to add a vertical line to the histogram for the mean danceability score, based on the example in class.
+Take the same code and add a vertical line to the histogram for the mean danceability score, based on the example in class.
 
 ```{r}
+Spotify_Songs |>
+  ggplot() + 
+  geom_histogram(aes(x=danceability), binwidth = 0.01) +
+  geom_vline(aes(xintercept = mean(danceability)), color = "red", linetype = "dashed", size = 1)
+
 ```
 
-### Task 6: Describe our results
 
-Write a few sentences about the distribution of danceability scores in the Spotify dataset. Is it a normal distribution, or is it skewed in one direction? What does the mean and distribution tell us about the songs in the dataset?
+### Task 6: Add two lines to the histogram to show one standard deviation
 
-### Task 7: Save Your Work and Put it on GitHub
+Take the previous code and add two lines to the histogram for the 1st standard deviation below and above the mean score.
+
+```{r}
+Spotify_Songs |>
+  ggplot() + 
+  geom_histogram(aes(x=danceability), binwidth = 0.01) +
+  geom_vline(aes(xintercept = mean(danceability)), color = "red", linetype = "dashed", size = 1) +
+  geom_vline(aes(xintercept = mean(danceability) - sd(danceability)), color = "blue", linetype = "dashed", size = 1) +
+  geom_vline(aes(xintercept = mean(danceability) + sd(danceability)), color = "blue", linetype = "dashed", size = 1)
+  
+             
+```
+
+### Task 7: Describe our results and pitch a story
+
+Write a few sentences about the distribution of danceability scores in the Spotify dataset. Is it a normal distribution, or is it skewed in one direction? What does the mean and one standard distribution tell us about the songs in the dataset? Draft a short story pitch from this data.
+
+The data for the danceability of the Spotify data is not fully normally skewed. For starters, the mean line does not line up with the peak of the histogram. Also, there is a tail to the left meaning the data is skewed to the left instead of being a normally distributed graph. If you were to draw a line on the graph it woulg go from low and long on the left to a slow ascent to a sharp drop and end on the right which is not how a normal distribution acts. This tells us that one standard deviation to the right is going to have higher numbers than one standard deviation to the left since the numbers in the standard deviation on both sides are not equal (one is smaller than the otehr). Also, this tells us that it could appear that there are more numebrs higher because one standard deviation to the right has higher numbers whereas in reality more numbers are in the lower numbers it might just appear the opposite since one standard deviaition is not accounting for all the data remaining on the left. A short story I would pitch is looking into why more songs listened to in 2020 had a lower danceability. I think it would be interesting to tie this into COVID and maybe look at the fact that more people were sad at the time so less dancing music was listened to. I think it would be interesting to try and look and compare these statistics to COVID and see if the danceability scores being more on the lower side was a result of COVID or not. 
+
+
+
+### Task 8: Save Your Work and Put it on GitHub
 
 Save this notebook, then commit it to your local repository. Push the changes to your GitHub repository and submit the URL for this file in ELMS.
-
