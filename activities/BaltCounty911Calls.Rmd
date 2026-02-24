@@ -74,7 +74,7 @@ summary(daily_calls$call_count)
 
 Let's visualize the time series of daily calls. What patterns do you see? If you had to draw horizontal lines that would highlight unusual days, where would those lines be?
 
-ANSWER HERE
+If I had to draw horizontal lines to indicate what the unusal days are I would put lines on the far top and far bottom. I think these are the main outliers because the other data sets were all around the middle howevere the ones in the top or bottom are outliers because they are extremes on both sides, very low and very high. I think it would be interesting to specifically look at the highest in October and the lowest in July and January. 
 
 ```{r daily-calls-plot}
 # Plot daily call volume
@@ -207,7 +207,7 @@ ggplot(dow_summary, aes(x = day_of_week, y = avg_calls)) +
 
 We can also calculate z-scores that account for the day of the week pattern. How would you describe the day with the highest z-score without using the term "z-score"?
 
-ANSWER HERE
+You are comparing the highest amount of the drug that is used and shows how many standard deviations from the mean the score is. Meaning it shows how much higher or lower the result is from the average based on the standard deviation. In the most basic of terms it explains how far of an outlier a piece of data is from the average. 
 
 ```{r day-of-week-z-scores}
 # Calculate day-of-week adjusted z-scores
@@ -298,5 +298,5 @@ top_outliers |> kable(digits = 2)
 
 Based on our z-score analysis, what are some potential angles for reporting? What would your next steps be and what would you tell an editor about your findings?
 
-ANSWER HERE
+Some potential angles for this story would be to look into what was happening on the days and year specifically where there were the highest anounts of use. I think it would be interesting to try and find an actual connection instead of just saying that there was an issue at that time. Looking into the specific day and trying to figure out what the potential cordinations could be could potentially alert the public in case a similar event is happening so that people can be on the look out. I also think it would be interesting to do a story on the days of the week that are worse. I think it would be interesting to look into why some days of the week are seemingly less likely for the drug to be used and see how often there are impacts based on certain days of the week instead of just specific days. 
 
