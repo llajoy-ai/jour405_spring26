@@ -1,0 +1,136 @@
+---
+title: "HW8b: Polling Simulation"
+---
+
+In class, you simulated polling estimates for the share of Americans who are religiously unaffiliated — a group that makes up about 36% of the population. In this assignment, you'll run the same simulation for a different group: White Evangelicals, who make up roughly 10% of the population.
+
+That difference matters more than it might seem. When a proportion is close to 50%, samples tend to be pretty well-behaved. When it's much smaller — or much larger — samples can behave differently, especially at small sizes. Your job is to run the simulation, compare what you find to the in-class results, and think carefully about what it means for reporting on religion and politics.
+
+### Task 1: Load the tidyverse
+
+```{r}
+library(tidyverse)
+
+```
+
+### Task 2: Load the CES data
+
+Load the CES 2024 religion dataset from the same URL as the in-class activity and save it to a dataframe called `ces`:
+
+`https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/ces_2024_religion.csv`
+
+```{r}
+ces <- read_csv('https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/ces_2024_religion.csv')
+
+```
+
+### Task 3: Calculate the population proportion
+
+Create a new column called `evangelical` that is `TRUE` if a respondent's `trad` value is `"White Evangelical"` and `FALSE` otherwise. Then calculate the proportion of the full dataset that is White Evangelical and save it as `population_proportion`.
+
+```{r}
+ces <- ces |>
+  mutate(evangelical = trad %in% c("White Evangelical"))
+population_proportion <- mean(ces$evangelical)
+
+```
+
+Write down this value. How does it compare to the unaffiliated proportion (about 0.36) from the in-class activity?
+
+The value is 0.1049 rounded. This number is a lot lower than the unaffiliated proportion from class. I think the main cause for this is that the data from class included more groups of people in its unaffiliated column whereas the evangelical column only includes true statements if a person is white evangelical, I think this could have played a role in the low number becayse there is a smaller population in general that is being looked at. 
+
+### Task 4: Take a single small sample
+
+Use `set.seed(42)` and sample 50 rows from `ces`. Save it as `sample_50`. Calculate the proportion of White Evangelical respondents in your sample.
+
+```{r}
+set.seed(42)
+
+sample_50 <- ces |> sample_n(50)
+
+proportion_50 <- mean(sample_50$evangelical)
+
+```
+
+How close is your sample estimate to the population proportion? How does the accuracy compare to what you saw with the unaffiliated group in class?
+
+The proportion is 0.16 which compares to in class because then the proportion was actually the same. This was surprising to me because the population proportion above had been very different from the results from what we did in class. Therefore, I expected the results to be the same in this example with a large difference, however this was not the case because the results were the same. The sample estimate was decently close to the population proportion. 
+
+### Task 5: Take a single larger sample
+
+Use `set.seed(1966)` and sample 500 rows. Save it as `sample_500`. Calculate the proportion of White Evangelical respondents in this sample.
+
+```{r}
+set.seed(1966)
+
+sample_500 <- ces |> sample_n(500)
+
+proportion_500 <- mean(sample_500$evangelical)
+
+
+```
+
+Did the larger sample improve the estimate? How does the improvement compare to what you saw in class?
+
+The original estimate was closer to the true 0.50 because it was at 0.16. In this second larger sample there was actually a decrease in the number and it went down to 0.09. This is different from in class because the number actually got larger and went to 0.36 instead of getting smaller. I think this could potentially be because as I mentioned the amount of people in the category is smaller so when you expand the sample there is going to be less people in that category which could have caused this result. 
+
+### Task 6: Simulate many polls
+
+The code below runs the same simulation as the in-class activity, but using your `evangelical` column. Run it as-is.
+
+```{r}
+set.seed(42)
+
+simulate_polls <- function(data, sample_size, n_simulations = 1000) {
+  proportions <- replicate(n_simulations, {
+    s <- data |> sample_n(sample_size)
+    mean(s$evangelical)
+  })
+  tibble(proportion = proportions, sample_size = sample_size)
+}
+
+simulations2_50 <- simulate_polls(ces, 50)
+simulations2_500 <- simulate_polls(ces, 500)
+```
+
+### Task 7: Visualize the simulation results
+
+Create two histograms side by side using the code structure from class. Add a vertical line at `population_proportion`. Make sure to update the title and subtitle to reflect that this simulation is about White Evangelicals.
+
+```{r}
+simulations_all <- bind_rows(simulations2_50, simulations2_500) |> 
+  mutate(sample_size = paste("n =", sample_size))
+
+ggplot(simulations_all, aes(x = proportion)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "white") +
+  geom_vline(xintercept = proportion, color = "red", linetype = "dashed", linewidth = 1) +
+  facet_wrap(~sample_size) +
+  labs(
+    title = "Distribution of Sample Estimates: Are White Evangelical",
+    subtitle = "Red line = true population proportion for White Evangelical. Each histogram shows 1,000 simulated polls.",
+    x = "Sample Proportion",
+    y = "Count",
+    caption = "Source: 2024 Cooperative Election Study"
+  ) +
+  theme_minimal()
+```
+
+### Task 8: Reflect on what you see
+
+**Describe the shape of the n=50 histogram.** Is it as symmetric as the unaffiliated histogram from class? Why do you think that is, given that White Evangelicals make up only about 10% of the population?
+
+The n=50 graph is almost symetrical with the unaffiliated graph however this is less of a gap in this graph and it appears to follow more of a normal distribution than the one from class. I think that it is interesting that they are so similar since there is a different sample being tested and there are more religions being tested in the one in class. I think that they are so similar because there is a similarily in the data in general and because the population proportions were the same at first despite there being different data being tested. 
+
+**Compare the n=50 and n=500 histograms for this group.** How much does the distribution change with a larger sample? Is the improvement bigger or smaller than what you saw in class with the unaffiliated group?
+
+The distribution changes a lot when you have a bigger sample. Specifically it becomes less spread out and more centered in the middle and more clustered in general compared to the n=50 graph. I do not think the improvement is bigger in class and I think there appears to be a very similar distribution of the sample between these graphs and the graphs from class. Again I think this is very interesting since there is different data being tested yet the graphs look very similar. 
+
+**A news organization wants to report on White Evangelical voters using a poll of 200 people.** Based on your simulations, roughly how many White Evangelical respondents would that poll be likely to include? What does that suggest about the reliability of estimates for smaller subgroups?
+
+I think that based on my data that poll would not include that many people that are White Evangelical. The population proportion for this set was very low compared to when more religions were looked at. Therefore, I think if they sampled again this many people the same thing would happen and there would be a low number of people that fit that genre. I think that this suggests that snaller samples are not as helpful since if there is a sample of 10 people and two or three of them are White Evangelical it might appeaer that there is more of that religion whereas if you asked a larger amount of people you would see that this is not the case. Therefore, a bigger group needs to be sampled in order to properly tell how many different people are in a certain group or share a belief because then you will have a more accurate representation not only of the population but of what is more common in an area. 
+
+**Imagine you are covering the 2028 presidential election and a campaign shares a poll showing White Evangelical support at 78%.** The poll sampled 400 people. Based on everything you've seen in this assignment and in class, what would you want to know before reporting that number?
+
+Before reporting this number I would want to know the backgrounds of these people. Specifically, I would want to know where the sample was gathered from for geographic context. Also, I think I would have to know the process for picking the specific people that were questioned because if it was actually random and features many different groups of people then the data will be more accurate compared to if the data is less random and does not feature certain demographics. 
+
+When finished, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
