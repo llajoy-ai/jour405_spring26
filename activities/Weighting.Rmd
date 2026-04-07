@@ -5,8 +5,6 @@ date: "2025-04-01"
 
 ```{r setup, include=FALSE}
 library(knitr)
-install.packages("kableExtra")
-library(kableExtra)
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(tidyverse)
 
@@ -93,10 +91,13 @@ ggplot(nonvoters_data, aes(x = weight)) +
 **Questions:**
 
 1. What is the range of weights in this dataset?
+The dange of weights is around 0-3.
 
 2. What does it mean when a respondent has a weight of 0.23? What about 3.04?
+When a respondent has a weight of 0.23 this means that represented too much and counts as less because they are overrepresented. A weight of 3.04 means that they are underrepresented in the community so they are being counted as more than one person to even the responses. 
 
 3. Why might some respondents be weighted more heavily than others?
+More people are weighted heavily to account for the fact that some people are in the minority compared to others. If someone is underrepresented than their data could get lost in the all the overrepresented people. Therefore, they are weighted heavier so that their data does not get lost. 
 
 # Exercise 1: Voter Categories and Weighting
 
@@ -232,7 +233,11 @@ kable(comparison, digits = 1, caption = "Difference Between Weighted and Unweigh
 **Answer These Questions:**
 
 1. Which voter category shows the biggest difference between weighted and unweighted results?
+The category with the buggest difference is the rarely/never category. 
 
 2. How might these differences affect reporting on likely voter turnout?
+This might affect reporting because if you do not know if someone is going to vote they will not respond and then we will not know what way a large group will be voting. If those rarely people decide to vote this could drastically impact the election because we cannot see what these people think and if they decide to vote we have not accounted for their answers, 
 
 3. Why do you think these differences exist? What does this tell us about who might be over or under-represented in the sample?
+I think these differences exist because there are so many people and there are so many different opinions that there is bound to be differences when you take different things into account when polling. This tells us that people who do not often vote play a larger role and that undrerepresented people really can make a difference in what poll results are. 
+
