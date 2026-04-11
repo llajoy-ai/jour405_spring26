@@ -1,0 +1,25 @@
+---
+title: "final_project"
+output: html_document
+Name: Lena LaJoy
+---
+
+#Notes 
+My final project is going to focus on the differences between Maryland's basketball team and other big 10 schools to see which team has had the best season since Maryland joined the BIG10 conference. 
+
+```{r}
+library(tidyverse)
+```
+
+
+LInk 1: https://bigten.org/mbb/stats/?category=team&section=all&teamValue=all&stats=table_team_all&view=table&season=2022
+
+This link has data for all BIG10 teams going back to the 2023-2022 season. The stat's include scoring points, player averages, overall rankings and specific data about which teams did the best in certain categories. 
+
+Link 2: https://umterps.com/sports/2018/7/10/maryland-mens-basketball-statistics
+
+This link has data for Maryland Men's basketball team going back to 1987. The data has information on the teams overall score and how they competed against teams in the regular and conference season. 
+
+Link 3: https://www.sports-reference.com/cbb/conferences/big-ten/men/
+
+This link gives data for all of the big 10 teams through the years and shows who the conference champions are. It also gives data about all of those seasons so I can compare which team has been the most successful in the past. 
