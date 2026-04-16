@@ -13,6 +13,7 @@ Your task in this assignment will be to examine the relationship between those t
 ### Task 1: Load the tidyverse
 
 ```{r}
+library(tidyverse)
 ```
 
 ### Task 2: Load the GDP and DJIA data
@@ -20,6 +21,7 @@ Your task in this assignment will be to examine the relationship between those t
 Load the GDP data from https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/gdp_djia.csv
 
 ```{r}
+GDP_DJIA <- read_csv("https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/gdp_djia.csv")
 ```
 
 ### Task 3: Calculate the correlation coefficient
@@ -27,6 +29,8 @@ Load the GDP data from https://raw.githubusercontent.com/dwillis/jour405/refs/he
 Use the `cor()` function to calculate the correlation coefficient between the DJIA and GDP.
 
 ```{r}
+GDP_DJIA |>
+  summarise(correlation =cor(GDP, DJIA, method = "pearson"))
 ```
 
 ### Task 4: Create a scatterplot
@@ -34,11 +38,17 @@ Use the `cor()` function to calculate the correlation coefficient between the DJ
 Use the `ggplot()` function to create a scatterplot of the DJIA and GDP. Be sure to label your axes and add a title.
 
 ```{r}
+GDP_DJIA |>
+  ggplot()+
+  geom_point(aes(x=GDP, y=DJIA ))+
+  geom_smooth(aes(x=GDP, y=DJIA,), method="lm")
 ```
 
 ### Task 5: Describe our results
 
 Write a few sentences about the relationship between the DJIA and GDP. Is there a strong correlation between the two variables? What does the scatterplot show?
+
+The correlation calculation shows that there is a high chance that GDP and DJIA have a strong connection. A score of 0.9 is very high and almost to 1.0. Based on the scatterplot, it seems that when the GDP increases, so does the DJIA. The data goes from 2013 to 2024 so there is over 10 years of data being compiled. Therefore, I think this is enough data to actually be able to tell that there is an upward trend when both GDP and DJIA increase. There are some outliers on the line, however there is still mostly an upward curve occurring. 
 
 
 When you are done, save your work, switch to GitHub Desktop, then add, commit and push your changes to GitHub and submit the URL of the notebook in ELMS.
