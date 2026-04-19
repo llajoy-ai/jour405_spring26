@@ -12,6 +12,22 @@ library(tidyverse)
 ```
 
 
+```{r}
+BIG10_Champs <- read_csv("C:/Users/lclaj/Downloads/Season Champtions  - Sheet1.csv")
+```
+
+
+```{r}
+Maryland_Big10 <- read_csv("C:/Users/lclaj/Downloads/Maryland Big 10 Season Stats - Sheet1.csv")
+```
+```{r}
+Team_Stats <- read_csv("https://raw.githubusercontent.com/dwillis/dwillis.github.io/refs/heads/main/docs/sports-data-files/cbblogs1526.csv")
+
+filtered_Team_Stats <- spec(Season > "2012-2013", TeamFullName == "Wisconsin Badgers Men's, Washington Huskies Men's, UCLA Bruins Men's, USC Trojans Men's, Rutgers Scarlet Knights Men's, Purdue Boilermakers Men's, Penn State Nittany Lions Men's, Oregon Ducks Men's, Ohio State Buckeyes Men's, Northwestern Wildcats Men's, Nebraska Cornhuskers Men's, Minnesota Golden Gophers Men's, Michigan State Spartans Men's, Michigan Wolverines Men's, Maryland Terrapins Men's, Iowa Hawkeyes Men's, Indiana Hoosiers Men's, Illinois Fighting Illini Men's")
+
+head(filtered_Team_Stats)
+```
+
 LInk 1: https://bigten.org/mbb/stats/?category=team&section=all&teamValue=all&stats=table_team_all&view=table&season=2022
 
 This link has data for all BIG10 teams going back to the 2023-2022 season. The stat's include scoring points, player averages, overall rankings and specific data about which teams did the best in certain categories. 
@@ -23,3 +39,16 @@ This link has data for Maryland Men's basketball team going back to 1987. The da
 Link 3: https://www.sports-reference.com/cbb/conferences/big-ten/men/
 
 This link gives data for all of the big 10 teams through the years and shows who the conference champions are. It also gives data about all of those seasons so I can compare which team has been the most successful in the past. 
+
+
+CSV links: 
+C:/Users/lclaj/Downloads/Maryland Big 10 Season Stats - Sheet1.csv
+
+
+
+Tests I could run: 
+
+1. I would want to run a test to see what teams had the maximum success and which had the lowest. 
+2. I would want to run a test to make a plot, most likely scatter, that shows how each team's seasons have varied in success throughout the season. 
+3. I would want to run a test to see what the distribution is between the teams including margin of error, standard deviation etc to see how Maryland's distribution of success has changes throughout the years. 
+4. I would also want to see the conficence intervals betwen the data used in a histogram to see how their seasons vary and if there is success ir decreased success throughout the seasons. 
