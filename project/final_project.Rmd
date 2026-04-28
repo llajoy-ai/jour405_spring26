@@ -18,7 +18,7 @@ BIG10_Champs <- read_csv("C:/Users/lclaj/Downloads/Season Champtions  - Sheet1.c
 
 
 ```{r}
-Maryland_Big10 <- read_csv("C:/Users/lclaj/Downloads/Maryland Big 10 Season Stats - Sheet1.csv")
+Maryland_Big10 <- read_csv("C:/Users/lclaj/Downloads/Maryland Big 10 Season Stats - Sheet1 (2).csv")
 ```
 ```{r}
 Team_Stats <- read_csv("https://raw.githubusercontent.com/dwillis/dwillis.github.io/refs/heads/main/docs/sports-data-files/cbblogs1526.csv")
@@ -51,4 +51,45 @@ Tests I could run:
 1. I would want to run a test to see what teams had the maximum success and which had the lowest. 
 2. I would want to run a test to make a plot, most likely scatter, that shows how each team's seasons have varied in success throughout the season. 
 3. I would want to run a test to see what the distribution is between the teams including margin of error, standard deviation etc to see how Maryland's distribution of success has changes throughout the years. 
-4. I would also want to see the conficence intervals betwen the data used in a histogram to see how their seasons vary and if there is success ir decreased success throughout the seasons. 
+4. I would also want to see the conficence intervals betwen the data used in a histogram to see how their seasons vary and if there is success ir decreased success throughout the seasons.
+
+
+
+Practice Tests 
+
+# Task 1: find the mean of wins/losses for total season and conference games 
+
+
+```{r}
+Maryland_Big10 |>
+  summarize(
+    mean_official_wins =mean(Overall_Record_Wins),
+    mean_official_losses =mean(Overalll_Record_Losses),
+    mean_conference_wins =mean(Conference_Score_Wins),
+    mean_conference_losses =mean(Conference_Score_Losses)
+  )
+  
+  
+```
+#What does this mean?
+I think this data shows that in most cases, the team is winning more overall games than they are losing. However, in the conference season there is not as large of a gap between wins and loses. I think this means that when the Maryland team begins playing better teams in the BIG10 they begin to suffer with their performance. However, on average they are still winning more of these seasons than they are losing. 
+
+#Task 2 scatterplot to show how many games have been won in overall seasons 
+
+```{r}
+Maryland_Big10 |>
+  ggplot()+
+  geom_point(aes(x=Overall_Record_Wins, y=`Season Year`))+
+  geom_smooth(aes(x=Overall_Record_Wins, y=`Season Year`), method="lm")+
+  geom_text(aes(x=Overall_Record_Wins, y=`Season Year`, label = Overall_Record_Wins))+
+  labs(x="Amount of Wins", y="Season Year", title = "Amount of Wins Per Season in Maryland Mens Basketball")
+```
+
+#What does this mean
+The scatterplot shows the more recent data at the top of the graph and older data on the bottom. I think that this data shows that there there does not appear to be much a pattern of success since joining the BIG10. I think that the data shows that the most success occurred between the 2014-2015 season and the 2019-2020 season. In these seasons the average overall wins were all 19+. However, once it hit 2020-2021 season the scores began to drop and did not begin to rise again until the 2024-2025 season. However, this past season won the least amount of games since Maryland joined the BIG10 conference in 2014. Therefore, I think that the data suggests that in the most recent years, not counting last year when we had a #1 recruit, that the Maryland Men's Baskebtall team has been declining in overall season success since 2020. 
+
+
+#Task 3: make a bar graph showing how overall wins compare to conference wins
+I want to make one of these bus I am slightly confused about how to do it.
+
+
