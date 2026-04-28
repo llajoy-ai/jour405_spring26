@@ -1,6 +1,6 @@
 ---
 title: "Multiple Regression Analysis: Maryland Voter Turnout"
-name: "YOUR NAME HERE"
+name: "LENA LAJOY"
 ---
 
 # Introduction
@@ -26,7 +26,7 @@ head(md_turnout)
 
 Before building our model, let's explore the data to understand the variables and their relationships. Examine the correlation matrix to see how the independent variables relate to each other and to the dependent variable (voter turnout). Which variables seem to be correlated? Are there any that are not correlated at all? Also look at the multiple scatterplots. Which variables seem to have a linear relationship with the dependent variable? Which do not?
 
-ANSWER HERE
+Based on the matrix it appears that the percent of white people has a larger positive impact on turnout and the percent of unemployed people has a higher negative impact on turnout. The variables that seem to be postively correlated are the percent of white people and income. it appears that some categories that might not have an impact are 
 
 
 ```{r}
@@ -89,7 +89,7 @@ The coefficients tell us the estimated effect of each independent variable on th
 
 Examine the output of the model, checking the coefficients, residuals, and overall model fit. How well does this multiple variable model predict turnout? Do any of the variables seem to be insignificant? Is this a useful model, based on what you've seen? Why?
 
-ANSWER HERE
+The min and max tell us that there is not much variation between the data which means that it is more likely to be accurate compared to the other data. The coefficients show that there is a higher change of income, median age and percentage of white people having a positive impact on the turnout. The coefficients also show that there is a negative impact on turnout based on population, percent of bachelors and percent unemployed. The p-value is also high as well as the adjusted R which suggests that there is statistical significance with the data. 
 
 ```{r}
 # Build initial model with all predictors
@@ -103,19 +103,19 @@ summary(initial_model)
 
 Create three alternative models by adding or removing variables to see if we can improve the model's performance. Turnout will always be the dependent variable, but you should alter the independent variables by removing or adding some. Then compare the models using adjusted R-squared values. Are any of the models significantly better than the others?
 
-ANSWER HERE
+None of my models were more successful than the original model we used with everything. The model that was most successful was model2 where I used median age, population, income and the pct of white people. This model had a R squared value of 0.7997. The closest after this was model4 with a R squared of 0.74. The worst model by far was model3 with a R squared value of 0.53. This model had only the percent unemployed, income and pct of bachelors higher which tells me these categories have less of an impact. 
 
 ```{r}
 # Model 2
-model2 <- lm(turnout ~ REPLACE ME, data = md_turnout)
+model2 <- lm(turnout ~ median_age + population + income + pct_white, data = md_turnout)
 summary(model2)
 
 # Model 3
-model3 <- lm(turnout ~ REPLACE ME, data = md_turnout)
+model3 <- lm(turnout ~ pct_unemployed + income +pct_bachelors_higher, data = md_turnout)
 summary(model3)
 
 # Model 4
-model4 <- lm(turnout ~ REPLACE ME, data = md_turnout)
+model4 <- lm(turnout ~ population + pct_white + income, data = md_turnout)
 summary(model4)
 
 # Compare models
@@ -144,4 +144,4 @@ ggplot(model_comparison, aes(x = reorder(Model, Adjusted_R_squared), y = Adjuste
 
 Without using the words "multiple regression model", describe how you could use this analysis to cover an election or voter participation story.
 
-ANSWER HERE
+I could use this data for an election story to see how much turnout there will be in certain locations based on the demographics and people that live in these areas. This would help with gathering a consensus and figuring out how many people from each area/county will be voting. Once you know roughly how many people are expected to vote based off of this data you could start gathering polls to see how people are responding and compare the results to the entire sample size you estimate from the model. This would give you a rough idea of how votes could be cast and show you what locations will be the most influential in the election race. 
