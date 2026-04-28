@@ -9,7 +9,6 @@ Multiple regression analysis is a statistical method used to understand the rela
 
 ```{r setup}
 library(tidyverse)
-#install.packages('corrplot')
 library(corrplot)
 ```
 
@@ -54,7 +53,7 @@ The coefficients tell us the estimated effect of each independent variable on th
 
 Is this a useful model, based on what you've seen? Why?
 
-ANSWER HERE
+Based on what we discussed there is a large gap between some of the coefficients which show that some categories might not have as much of an impact. I think the min and max show that the data might not be great which could cause some confusion with the scores. Therefore, I think the model is successful because it shows that some of the data does not make since and if we did not have that information it would maybe seem like there were actually important stats. 
 
 ## Correlation Analysis
 
@@ -80,8 +79,12 @@ The results from our correlation analysis show the strength of the relationships
 
 Which of these three factors - Yards Gained, Takeaways and Points Scored - have the most impact on wins? Are there any that do not seem impactful at all?
 
-ANSWER HERE
+It appears that points scored appear to have the most impact on wins. It seems like Yards Gained has the least impact with only around 0.4. I think this means that there is little to no impact from Yards Gained. When we removed Yards Gained from the model it showed that there was almost no impact which shows that Yards Gained really do not have much impact on the wins. 
 
 ## Using the Model (3 points)
 
 Without using the words "multiple regression model", describe how you could use this model to cover a team or game.
+
+You could use this model to cover a team by running it against how well they have done in the past to see how the game is likely to go. If a team gets more scored points in a game compared to the team they are competing against you might be able to guess that theit team has a higher chance of winning. You can also do this throughout the game and see who has the most points and takeaways to see who is likely to win. You could know that Yards Gained does not have much impact and not go much into those details compared to the other more significant data. 
+
+
