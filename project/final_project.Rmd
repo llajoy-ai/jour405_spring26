@@ -3,59 +3,95 @@ title: "final_project"
 output: html_document
 Name: Lena LaJoy
 ---
-
-#Notes 
-My final project is going to focus on the differences between Maryland's basketball team and other big 10 schools to see which team has had the best season since Maryland joined the BIG10 conference. 
+#Set Up
 
 ```{r}
 library(tidyverse)
+library(dbplyr)
+library(corrplot)
 ```
+# Load Data
 
+#I compiled this data from Sports Reference CBB where data for what teams have won the BIG10 championship and which have won overall in the season since UMD joined the BIG10. 
 
 ```{r}
 BIG10_Champs <- read_csv("C:/Users/lclaj/Downloads/Season Champtions  - Sheet1.csv")
 ```
 
 
+#I compiled the Maryland_Big10 data from Maryland's official sports data website from now to the 2013-2014 season. 
+
 ```{r}
 Maryland_Big10 <- read_csv("C:/Users/lclaj/Downloads/Maryland Big 10 Season Stats - Sheet1 (2).csv")
 ```
+
+
+#The Team_stats data was provided to me by Derek Wilis and I filtered that data so that it would only give me data for teams currently in the BIG10
+
 ```{r}
 Team_Stats <- read_csv("https://raw.githubusercontent.com/dwillis/dwillis.github.io/refs/heads/main/docs/sports-data-files/cbblogs1526.csv")
 
-filtered_Team_Stats <- spec(Season > "2012-2013", TeamFullName == "Wisconsin Badgers Men's, Washington Huskies Men's, UCLA Bruins Men's, USC Trojans Men's, Rutgers Scarlet Knights Men's, Purdue Boilermakers Men's, Penn State Nittany Lions Men's, Oregon Ducks Men's, Ohio State Buckeyes Men's, Northwestern Wildcats Men's, Nebraska Cornhuskers Men's, Minnesota Golden Gophers Men's, Michigan State Spartans Men's, Michigan Wolverines Men's, Maryland Terrapins Men's, Iowa Hawkeyes Men's, Indiana Hoosiers Men's, Illinois Fighting Illini Men's")
+filtered_team_stats <- Team_Stats |>
+  filter(TeamFullName == "llinois Fighting Illini Men's" | TeamFullName == "Indiana Hoosiers Men's" | TeamFullName == "Iowa Hawkeyes Men's" | TeamFullName == "Maryland Terrapins Men's" | TeamFullName == "Michigan Wolverines Men's" | TeamFullName == "Michigan State Spartans Men's" | TeamFullName == "Minnesota Golden Gophers Men's" | TeamFullName == "Nebraska Cornhuskers Men's" | TeamFullName == "Northwestern Wildcats Men's" | TeamFullName == "Ohio State Buckeyes Men's" | TeamFullName == "Oregon Ducks Men's" | TeamFullName == "Penn State Nittany Lions Men's" | TeamFullName == "Purdue Boilermakers Men's" | TeamFullName == "Rutgers Scarlet Knights Men's" | TeamFullName == "USC Trojans Men's" | TeamFullName == "UCLA Bruins Men's" | TeamFullName == "Washington Huskies Men's" | TeamFullName == "Wisconsin Badgers Men's")
 
-head(filtered_Team_Stats)
+```
+# Now I am going to filter the data and make it so there are individual sets for each BIG10 team so it is easier to compare the data. 
+
+```{r}
+Indiana_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Indiana Hoosiers Men's")
+
+Iowa_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Iowa Hawkeyes Men's")
+
+Maryland_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Maryland Terrapins Men's")
+
+Michigan_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Michigan Wolverines Men's")
+
+Michigan_State_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Michigan State Spartans Men's")
+
+Minnesota_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Minnesota Golden Gophers Men's")
+
+Nebraska_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Nebraska Cornhuskers Men's")
+
+Northwestern_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Northwestern Wildcats Men's")
+
+Ohio_State_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Ohio State Buckeyes Men's")
+
+Oregon_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Oregon Ducks Men's")
+
+Penn_State_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Penn State Nittany Lions Men's")
+
+Purdue_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Purdue Boilermakers Men's")
+
+Rutgers_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Rutgers Scarlet Knights Men's")
+
+USC_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "USC Trojans Men's")
+
+UCLA_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "UCLA Bruins Men's")
+
+Washington_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Washington Huskies Men's")
+
+Wisconsin_Stats <- filtered_team_stats |>
+  filter(Season > "2012-2013" & TeamFullName == "Wisconsin Badgers Men's") 
 ```
 
-LInk 1: https://bigten.org/mbb/stats/?category=team&section=all&teamValue=all&stats=table_team_all&view=table&season=2022
 
-This link has data for all BIG10 teams going back to the 2023-2022 season. The stat's include scoring points, player averages, overall rankings and specific data about which teams did the best in certain categories. 
-
-Link 2: https://umterps.com/sports/2018/7/10/maryland-mens-basketball-statistics
-
-This link has data for Maryland Men's basketball team going back to 1987. The data has information on the teams overall score and how they competed against teams in the regular and conference season. 
-
-Link 3: https://www.sports-reference.com/cbb/conferences/big-ten/men/
-
-This link gives data for all of the big 10 teams through the years and shows who the conference champions are. It also gives data about all of those seasons so I can compare which team has been the most successful in the past. 
-
-
-CSV links: 
-C:/Users/lclaj/Downloads/Maryland Big 10 Season Stats - Sheet1.csv
-
-
-
-Tests I could run: 
-
-1. I would want to run a test to see what teams had the maximum success and which had the lowest. 
-2. I would want to run a test to make a plot, most likely scatter, that shows how each team's seasons have varied in success throughout the season. 
-3. I would want to run a test to see what the distribution is between the teams including margin of error, standard deviation etc to see how Maryland's distribution of success has changes throughout the years. 
-4. I would also want to see the conficence intervals betwen the data used in a histogram to see how their seasons vary and if there is success ir decreased success throughout the seasons.
-
-
-
-Practice Tests 
+#Analysis
 
 # Task 1: find the mean of wins/losses for total season and conference games 
 
@@ -71,10 +107,11 @@ Maryland_Big10 |>
   
   
 ```
+
 #What does this mean?
 I think this data shows that in most cases, the team is winning more overall games than they are losing. However, in the conference season there is not as large of a gap between wins and loses. I think this means that when the Maryland team begins playing better teams in the BIG10 they begin to suffer with their performance. However, on average they are still winning more of these seasons than they are losing. 
 
-#Task 2 scatterplot to show how many games have been won in overall seasons 
+# Task 2 scatterplot to show how many games have been won in overall seasons 
 
 ```{r}
 Maryland_Big10 |>
@@ -89,7 +126,188 @@ Maryland_Big10 |>
 The scatterplot shows the more recent data at the top of the graph and older data on the bottom. I think that this data shows that there there does not appear to be much a pattern of success since joining the BIG10. I think that the data shows that the most success occurred between the 2014-2015 season and the 2019-2020 season. In these seasons the average overall wins were all 19+. However, once it hit 2020-2021 season the scores began to drop and did not begin to rise again until the 2024-2025 season. However, this past season won the least amount of games since Maryland joined the BIG10 conference in 2014. Therefore, I think that the data suggests that in the most recent years, not counting last year when we had a #1 recruit, that the Maryland Men's Baskebtall team has been declining in overall season success since 2020. 
 
 
-#Task 3: make a bar graph showing how overall wins compare to conference wins
-I want to make one of these bus I am slightly confused about how to do it.
+#Task 3: figuring out which teams had the highest average points throughout the seasons since Maryland joined to see if that is representative of which teams have had the most success
+
+```{r}
+Indiana_Stats |>
+  summarize(
+    mean_Indianapoints = mean(TeamScore)
+  )
+
+Iowa_Stats |>
+  summarize(
+    mean_Iowapoints = mean(TeamScore)
+  )
+
+Maryland_Stats |>
+  summarize(
+    mean_Marylandpoints = mean(TeamScore)
+  )
+
+Michigan_Stats |>
+  summarize(
+    mean_Michiganpoints = mean(TeamScore)
+  )
+
+Michigan_State_Stats |>
+  summarize(
+    mean_MSUpoints = mean(TeamScore)
+  )
+
+Minnesota_Stats |>
+  summarize(
+    mean_Minnesotapoints = mean(TeamScore)
+  )
+
+Nebraska_Stats |>
+  summarize(
+    mean_Nebraska = mean(TeamScore)
+  )
+
+Northwestern_Stats |>
+  summarize(
+    mean_Northpoints = mean(TeamScore)
+  )
+
+Ohio_State_Stats |>
+  summarize(
+    mean_ohiopoints = mean(TeamScore)
+  )
+
+Oregon_Stats |>
+  summarize(
+    mean_Oregonpoints = mean(TeamScore)
+  )
+
+Penn_State_Stats |>
+  summarize(
+    mean_pennpoints = mean(TeamScore)
+  )
+
+Purdue_Stats |>
+  summarize(
+    mean_Purduepoints = mean(TeamScore)
+  )
+
+Rutgers_Stats |>
+  summarize(
+    mean_Rutgerspoints = mean(TeamScore)
+  )
+
+UCLA_Stats |>
+  summarize(
+    mean_UCLApoints = mean(TeamScore)
+  )
+
+USC_Stats |>
+  summarize(
+    mean_USCpoints = mean(TeamScore)
+  )
+
+Washington_Stats |>
+  summarize(
+    mean_Washpoints = mean(TeamScore)
+  )
+
+Wisconsin_Stats |>
+  summarize(
+    mean_Wiscpoints = mean(TeamScore)
+  )
+
+```
+
+#What does this mean
+
+From this data, it appears that the team with the higest average points through every game since Maryland joined the BIG10 conference is Iowa with a 79.3 point average. The two teams with the lowest average points throughout this time were Rutgers and Northwestern with 68 points. I then looked at my data in the BIG10 champs and interestingly enough Iowa has never been a regular season champ, and they have only been a BIG10 champ once in the 2021-2022 season. In the BIG10 champs data, it shows that Michigan, Michigan State and Purdue have won the most BIG10 conferences and overall seasons since Maryland joined the BIG10. However, Michigan only had an average point score of 74, Michigan State had an average score of 75 and Purdue had an average score of 76 which are all lower than Iowa's average. This tells me that overall points in a season is not the main reason why Maryland has not performed as strong as some other BIG10 teams throughout their time in the conference since their average was 72. 
+
+#Task 4 make a multiple regression model to see what parts have the most impact on if Maryland won or lost a game since joining the BIG10
+
+#Before doing this I made a filtered data set that only had the games that Maryland won so I could see only the relation to won gammes
+
+```{r}
+Maryland_wins_data <- Maryland_Stats |>
+  filter(W_L == "W")
+```
+
+#This data showed me that there have been a total of 271 wins for Maryland since the 2013-2014 season. I then looked at the total data for Maryland and saw that they have played a total of 433 games in that time. Meaning they won 271/433 games which means they have won around 63% of their games since joining the BIG10. Now, I want to figure out what the contributor is that has been most beneficial to them winning those games. 
+
+#For my model, I want to look into the impacts of Turnovers, Free Throws, Three pointers and total offensive Rebounds on the teams overall score. I was going to use their Win/Loss ratio, however the code would not run unless there were numbers. Therefore, I used data from only games they won instead so that all the points scored would at least be winning numbers. I did this because I wanted to see what impacts the score the most. 
+
+```{r}
+model <- lm(TeamScore ~ TeamTurnovers + TeamFT + Team3P + TeamOffRebounds, data = Maryland_wins_data)
+summary(model)
+```
+#What does this mean?
+
+#This data tells me that there might be some inaccuracies with the data. This is because the median is decently far from 0 which would tell me the data is relatively centered. Also, the coefficients imply that Turnovers played the lowest role in Marylands overall score while 3P played a large positive role in Maryland's score. The residual standard error tells us that the model deviates from the number of points in a game by around 8. The multiple r-squared tells us that this model only accounts for around 34% of points scored. Finally, the low p-value suggests that there could be some statistical significance in the data. 
+
+#Task 5 Find correlation between the data that I just discovered.
+```{r}
+selected_vars <- Maryland_wins_data |>  select(TeamTurnovers, TeamFT, Team3P, TeamOffRebounds, TeamScore)
+cor(selected_vars)
+```
+#What this means
+
+#This data tells us how each factor positively or negatively impacts each other in relation to the Team Score. This data can then be used to make a model to visually see how the numbers are represented. 
+
+#Task 6 model of correlation
+
+```{r}
+corr_matrix <- cor(selected_vars)
+corrplot(corr_matrix, method = "circle")
+```
+#What does this mean
+
+#This data suggests that there is no impact from Turnovers on the Teams overall score. However, it suggests that Free Throws and 3 Point shots do have some of an impact on overall Team Score. This data was very interesting since I thought Turnover rate would have a large impact on a teams point score. This data made me want to look into a different model where instead of Turnovers and Offensive Rebounds I looked into Opponent Free Throws, 2 pointers, Total Rebounds and 3 pointers. 
+
+#Task 7 redo model to see if anything else has a stronger impact 
+
+```{r}
+model <- lm(TeamScore ~ OpponentFT + Team3P + TeamTotalRebounds + Team2P, data = Maryland_wins_data)
+summary(model)
+```
+#What does this mean?
+
+#This data suggests that there could be slightly more accuracy in the data because the median is slightly lower which means the data might be more in line. There is a large gap however between the Max and Min which could suggest the data is still not quite reliable. However, the coefficients for 3p and 2p show that these categories have a large impact on the overall score. Howeverm the p-value is still low which could suggest statistical significance in the data. 
+
+#Task 8 run correlation like in last model
+
+```{r}
+selected_vars <- Maryland_wins_data |>  select(OpponentFT, Team3P, TeamTotalRebounds, Team2P, TeamScore)
+cor(selected_vars)
+```
+#What does this mean
+
+#This suggests that 2p played the largest role in overall score while Opponennt Free Throws played a low role. Now I am going to make the visual version of this model so it is easier to understand. 
+
+
+```{r}
+corr_matrix <- cor(selected_vars)
+corrplot(corr_matrix, method = "circle")
+```
+
+#What does this mean
+
+#This graph shows that there is more significance with the data than in the previous data. In the other model there were not as many colors represented and one of the entire sections had little to no impact. However, in this model each category had at least some impact. The model shows that 2 pointers had the largest overall impact on the score. It also shows that 3 pointers had an impact as well. It also appears that 3 pointers and 2 pointers have a negative relationship which is interesting since they work together to help the team score. This could be because of a large number difference between the two. I think it is interesting that some categories I thought would have a larger role are not being listed. 
+
+
+#Analsis Explained in Total
+
+#Based off all of my data it appears that Maryland is not doing as poorly as other teams point wise since joining the BIG10. However, they have only been listed as a regular season champion once in tie with Michigan State and Wisconsin. Also, the team has not seen much personal growth in their wins since joining. The histogram I created at the beginning of my research shows that the teams overall win number has been decreasing, not including the 2024-2025 season, slowly throughout the years. There was a slight spike in success before this decrease occurred however. Also, from my data they have won around 63% of their games sine joinging the BIG10 which is a successfull number since it is over half. However, they are still not doing as well performance wise compared to other BIG10 teams. When I further investigated into the games they won, it appeared that having a high number of 2 point shots successfully made had a large impact on the teams overall success. The amount of 3 pointers had a lower number since less were made. Therefore, that makes me think the team needs to work on their overall ability to make 2 pointers or increase their 3 pointer abilities. Also, the amount of Free Throws made did not make much of an impact which tells me that the team needs to work on this the most. This is a category where teams can easily win or loose points based on how well they can shoot free throws repeadetly. I think if the team can work on this and increase their amount of reboudns they will have a better chance to stand up to other teams in the BIG10 like Purdue, Michigan and Michigan State which have all had very successful seasons in recent years. 
+
+#What Questions I would ask further of the Maryland coaches:
+#1. What do practices consist of?
+#2. What skills do you look for when recruiting that are specific to UMD?
+#3. What are some things you think as a team you need to work on?
+#4. How do you think Maryland's team compares to other BIG10 teams?
+
+#What I would write about:
+#I think it would be interesting to look into my data and write about how certain features, like points, turnover rate and rebounds need to be practiced more so that they can impact point opportunity, and I would disucss how Maryland's seasons have compared to other BIG 10 temas based on their average point scores and who has won the most champtionships. 
+
+#Who would I reach out to?
+#I would reach out to the coach Buzz Williams, I would reach out to players, I would reach out to the teams social media manager and I would reach out to the trainers. I think this would be a great way to learn what goes into practice and the overall team that makes them who they are. I think better understanding the training and team dynamic would better prepare me to compare this team to other ones in the BIG10. 
+
+#What are some problems I think I could run into?
+#I think that I could have a hard time getting in contact with some of these people. I think that it would take some time to hear from everyone I want to, however I think that with time and talking to the right people I would be able to find connections to get in contact with these people. 
 
 
